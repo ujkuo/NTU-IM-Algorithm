@@ -1,0 +1,166 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[top = 2.5cm, bottom = 2.5cm, left = 2.5cm, right = 2.5cm]{geometry} 
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{multirow} % Multirow is for tables with multiple rows within one cell.
+\usepackage{booktabs} % For even nicer tables.
+
+% As we usually want to include some plots (.pdf files) we need a package for that.
+\usepackage{graphicx} 
+\usepackage{amsmath} % to use split function
+
+% The default setting of LaTeX is to indent new paragraphs. This is useful for articles. But not really nice for homework problem sets. The following command sets the indent to 0.
+\usepackage{setspace}
+\setlength{\parindent}{0in}
+
+% Package to place figures where you want them.
+\usepackage{float}
+
+% The fancyhdr package let's us create nice headers.
+\usepackage{fancyhdr}
+\pagestyle{fancy} % With this command we can customize the header style.
+
+\fancyhf{} % This makes sure we do not have other information in our header or footer.
+
+\lhead{\footnotesize Algorithms: Homework 2}% \lhead puts text in the top left corner. \footnotesize sets our font to a smaller size.
+
+%\rhead works just like \lhead (you can also use \chead)
+\rhead{\footnotesize Yu-Chieh Kuo} %<---- Fill in your lastnames.
+
+% Similar commands work for the footer (\lfoot, \cfoot and \rfoot).
+% We want to put our page number in the center.
+\cfoot{\footnotesize \thepage} 
+
+\begin{document}
+\thispagestyle{plain} % This command disables the header on the first page. 
+
+\begin{tabular}{p{15.5cm}} % This is a simple tabular environment to align your text nicely 
+{\large \bf The Design and Analysis of Algorithms} \\
+National Taiwan University, Fall 2020  \\
+\hline % \hline produces horizontal lines.
+\\
+\end{tabular} % Our tabular environment ends here.
+
+\vspace*{0.3cm} % Now we want to add some vertical space in between the line and our title.
+
+\begin{center} % Everything within the center environment is centered.
+	{\Large \bf Homework 2} % <---- Don't forget to put in the right number
+	\vspace{2mm}
+	
+        % YOUR NAMES GO HERE
+	{\bf Yu-Chieh Kuo B07611039} % <---- Fill in your names here!
+		
+\end{center}  
+\vspace{0.4cm}
+
+This homework answers the problem set sequentially. 
+
+\begin{enumerate}
+
+%problem 1
+\item {
+To refine the definition to include only BST, we can re-write the definition as below. \\
+If both $t_l$ and $t_r$ are BST and the key value in $t_l$ and the every key value in $t_r$ satisfy the following relationship: \\
+\[
+max(t_l) < k < min(t_r)
+\]
+where k is the key value of the root in the BST, and $max(\cdot)$ function returns the maximum value in the left hand side in the tree or 0 when the tree is empty, $min(\cdot)$ function returns the minimum value in the right hand side in the tree or infinite when the tree is empty, then we can say the node $node(k,t_l,t_r)$ is a BST. \\
+To design a function that returns the rank of a given key value, we need to do the in-order traversal to the BST. Also, we have to design a recursive function to count the rank in the tree, and a function to check whether the given value exists or not. Let the given key value be $x$, the function returning the rank of the given value $Rank(t,x)$, the recursive function to count the rank in the tree $Count(t)$, and the function to check the existence of given key value $Exist(t,x)$ we have \\
+\[
+Exist(t,x) = 
+\begin{cases}
+false & \text{if t is an empty BST} \\
+true & \text{if $t$ is not an empty BST} \\
+Exist(t_l,n) & \text{if $x<k$} \\
+Exist(t_r,n) & \text{if $x>k$}
+\end{cases} 
+\]
+\[
+Count(t) = 
+\begin{cases}
+0 & \text{if t is an empty BST} \\
+Count(t_l) + Count(t_r) + 1 & \text{if $Exist(t,x)$ is $true$}
+\end{cases}
+\]
+\[
+Rank(t,x) = 
+\begin{cases}
+0 & \text{if $Exist(t,x)$ is $false$} \\
+Rank(t_l,x) & \text{if $x<k$} \\
+Count(t_l) + 1 & \text{if $x = k$} \\
+Count(t_l) + 1 + Rank(t_r,x) & \text{if $x > k$}
+\end{cases}
+\]
+Note that all $t$ above means the nodes $node(k,t_l,t_r)$.
+
+} % <--- For future Homework sets you of course have to change the questions.
+
+%problem 2
+\item{
+In the base case, when $h=2$, $T(2) = T(1) + T(0) + 1 = 2$, and also $T(2) = F(4)-1 = 2$, which shows the property is hold obviously. By induction hypothesis, we assume that for all $h=n$, it obtains the property $i.e.$ $T(h)=T(h-1)+T(h-2)+1=F(h+2)-1$, when the case $h = n+1$,
+\[
+\begin{split}
+    T(n+1) & = T(n) + T(n-1) + 1 \\
+    & = (F(n+2) - 1) + (F(n+1) - 1) + 1 \\
+    & = F(n+2) + F(n+1) + 1 \\
+    & = F(n+3) + 1
+\end{split}
+\]
+Therefore, we proof the relation $T(h) = F(h+2) -1$, where $F(n)$ is the $n$-th Fibonacci number, by induction.
+}
+
+%problem 3
+\item{
+Due to the property of the full binary tree, we can observe that the height increasing one layer means it creates a new root node to connect the origin full binary tree. As a result, the sum of the heights of all the nodes in $T$ will be the sum of the sub-tree and the height of root. Denote the sum of the heights $h$ of all nodes in $T$ be $T(h)$, in the base case, when $h=0$, $T(h) = 1 = 2^{1+1} - 1 - 2$, which shows we obtain the property . By induction hypothesis, we assume that for all $h=n$, it obtains the property, in the case $h = n +1$,
+\[
+\begin{split}
+    T(n+1) & = 2T(n) + (n+1) \\
+    & = 2\cdot (2^{n+1} -n -2) + (n + 1) \\
+    & = 2^{n+2} - 2(n+1) - 2
+\end{split}
+\]
+Therefore, by induction, we proof that the heights of all the nodes in $T$ is $2^{h+1}-h-2$.
+}
+
+%problem 4
+\item{
+In the base case $i.e.\ p=3, \ q = 0$, the polygon is a triangle, and the area of the triangle is $\frac{1\times 1}{2} = \frac{1}{2} = \frac{3}{2} + 0 - 1$. Assume that the property holds for all simple polygons, consider the general condition for $p \geq 3,\ q \geq 0$, we can divide the origin polygon into a triangle $T$ and a smaller polygon $P'$ with one edge connected. Let the number of lattice points on the connected edge be $c$, we have
+\[
+\begin{split}
+    & q = q_{P'}+q_{T}+(c-2) \\
+    & p = p_{P'} + p_{T} - 2(c-2) - 2
+\end{split}
+\]
+Notice that $c-2$ means that we need to deduct the two exception endpoints on the edge. Re-write the above formula, we have
+\[
+\begin{split}
+    & q_{P'}+q_{T} = q - (c-2) \\
+    & p_{P'} + p_{T} = p + 2(c-2) + 2
+\end{split}
+\]
+Let the area of the origin polygon, the divided polygon and the corresponding divided triangle be $A_P$, $A_{P'}$ and $A_T$ separately, we have 
+\[
+\begin{split}
+    A_{P} & = A_{P'} + A_T \\
+    & = (q_{P'} + \frac{p_{P'}}{2} - 1) + (q_T + \frac{p_T}{2} - 1) \\
+    & = q_{P'} + q_T + \frac{p_{P'}+p_T}{2} - 2 \\
+    & = q - (c-2) + \frac{p+2(c-2)+2}{2} - 2 \\
+    & = q + \frac{p}{2} - 1
+\end{split}
+\]
+Therefore, if the property is true for polygons constructed from $n$ triangles, it is also satisfied for polygons constructed from $n+1$ triangles. As a result, we proof that the area of polygon is $\frac{p}{2}+q-1$.
+%We consider the condition that for all $p = 3, \ q > 0$, which means the polygon is a larger triangle $i.e.$ there is at least one lattice point in the triangle and there are only three lattice points on the bound. Therefore, we can divide the polygon into three new triangles, connected by the point $\alpha$ inside the polygon. As a result, the area of polygon is the sum of three triangle. Let $A$ be the area of polygon, and $A_i$ be the area of divided triangle, where $i = 1,...,3$, we obtain \\
+}
+
+%problem 5
+\item{
+We denote the loop invariant assertion as below. \\
+\textit{ \bf At the start of each iteration of the loop, the sub-list A[i+1...n] consists of the largest elements originally in A in sorted order, and the sub-list A[0...i] contains the remaining elements in A.} \\
+In the base case, the index of last element $i=n$, the sub-list to the right is empty, which is easy to say that an empty sub-list is ordered and obeys the loop invariant. \\
+In the inductive step, at the start of any arbitrary iteration, no element from $i$ to $n$ can ever be disturbed again. During the step, the inner loop will find the largest element in \textbf{A[0...i]} and will swap it for the \textbf{A[i]} element. This element is swapped into the $i$-th position. The new \textbf{A[i]} element cannot be larger than any element in \textbf{A[i+1...n]} because the loop invariant is true prior to the start of the iteration, so it will simultaneously be the largest element from 0 to the element of index $i-1$ and no smaller than any element to its left. The loop invariant is preserved. \\
+Therefore, we can prove the algorithm's correctness via stating a suitable loop invariant.
+}
+
+\end{enumerate}
+
+\end{document}
