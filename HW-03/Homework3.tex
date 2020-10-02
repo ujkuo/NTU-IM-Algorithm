@@ -1,0 +1,199 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[top = 2.5cm, bottom = 2.5cm, left = 2.5cm, right = 2.5cm]{geometry} 
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{multirow} % Multirow is for tables with multiple rows within one cell.
+\usepackage{booktabs} % For even nicer tables.
+
+% As we usually want to include some plots (.pdf files) we need a package for that.
+\usepackage{graphicx} 
+\usepackage{amsmath} % to use split function
+
+% The default setting of LaTeX is to indent new paragraphs. This is useful for articles. But not really nice for homework problem sets. The following command sets the indent to 0.
+\usepackage{setspace}
+\setlength{\parindent}{0in}
+
+% Package to place figures where you want them.
+\usepackage{float}
+
+% The fancyhdr package let's us create nice headers.
+\usepackage{fancyhdr}
+\pagestyle{fancy} % With this command we can customize the header style.
+
+\fancyhf{} % This makes sure we do not have other information in our header or footer.
+
+\lhead{\footnotesize Algorithms: Homework 3}% \lhead puts text in the top left corner. \footnotesize sets our font to a smaller size.
+
+%\rhead works just like \lhead (you can also use \chead)
+\rhead{\footnotesize Yu-Chieh Kuo} %<---- Fill in your lastnames.
+
+% Similar commands work for the footer (\lfoot, \cfoot and \rfoot).
+% We want to put our page number in the center.
+\cfoot{\footnotesize \thepage} 
+
+\begin{document}
+\thispagestyle{plain} % This command disables the header on the first page. 
+
+\begin{tabular}{p{15.5cm}} % This is a simple tabular environment to align your text nicely 
+{\large \bf The Design and Analysis of Algorithms} \\
+National Taiwan University, Fall 2020  \\
+\hline % \hline produces horizontal lines.
+\\
+\end{tabular} % Our tabular environment ends here.
+
+\vspace*{0.3cm} % Now we want to add some vertical space in between the line and our title.
+
+\begin{center} % Everything within the center environment is centered.
+	{\Large \bf Homework 3 } % <---- Don't forget to put in the right number
+	\vspace{2mm}
+	
+        % YOUR NAMES GO HERE
+	{\bf Yu-Chieh Kuo B07611039} % <---- Fill in your names here!
+		
+\end{center}  
+\vspace{0.4cm}
+
+This homework answers the problem set sequentially. 
+
+\begin{enumerate}
+
+%problem 1
+\item {
+To avoid the notation confusion, we replace the coefficient $c$ and $a$ in the theorem with $x$ and $y$. Thefore, we can rewrite the theorem as below:
+
+For all constants $x > 0$ and $y > 1$, and for all monotonically increasing functions $f(n)$, we have $(f(n))^x=o(y^{f(n)})$.
+
+Let $f(n)=\log_2n$, $x = a$, $y = 2^b$, $a,b > 0$, by using the above theorem, we have
+\[
+(\log_2n)^a = o(2^{b(\log_{2}n)}) = o(n^b)
+\]
+Thus, we proof the function by using the above theorem.
+}
+
+%problem 2
+\item{}
+\begin{enumerate}
+    \item{ %problem a
+    Let $f(n) = (\log n)^{\log n}$, $g(n) = \frac{n}{\log n}$, we can find the limit of $\frac{g(n)}{f(n)}$ when $n \rightarrow \infty $ to justify whether $f(n) \in O(g(n))$.
+    
+\[
+\begin{split}
+\lim_{n \rightarrow \infty} \frac{g(n)}{f(n)} & = \lim_{n \rightarrow \infty} \frac{\frac{n}{\log n}}{\log n^{\log n}} \\
+& = \lim_{n \rightarrow \infty} \frac{n}{\log n \log n^{\log n}} \\
+& = \lim_{n \rightarrow \infty} \frac{n}{\log n^{\log n + 1}} \\
+& = \lim_{n \rightarrow \infty} \frac{1}{\log n \cdot \frac{1}{n}\log e} \\
+& = 0
+\end{split}
+\]
+Hence, we can obviously say that $f(n)$ is larger than $g(n)$ (as an inaccurate statement), so $f(n) \notin O(g(n))$. \\
+To justify whether $f(n) \in \Omega (g(n))$, we can proof by big-omega's definition:
+\[
+\Omega (g(n)) = \{ f(n) \ | \ \exists \ c, \ n_0 > 0 \ s.t. \ cg(n) \leq f(n), \ \forall n \geq n_0 \} 
+\]
+By definition, we have:
+\[
+c(\frac{n}{\log n}) \leq (\log n)^{\log n}
+\]
+Substitute $\log n$ by x and than take the $\log _2$ at both sides, we have:
+\[
+x + \log c - \log x \leq x \log x
+\]
+When $c=1$, $x > 1$ $i.e. \ n > 2$ , the inequality holds. Thus, by definition, we proof that $f(n) \in \Omega (g(n))$.
+    }
+    
+    \item{ %problem b
+    If $f(n) \in O(g(n))$, then there exists $c, n_0 > 0 \ s.t. f(n)\leq cg(n)$. We have
+\[
+n^22^n \leq c3^n 
+\]
+Divide by $2^n$ and take the $\log$ at both sides, we have:
+\[
+2\log n \leq n(\log c+\log 3-\log 2)
+\]
+Let $c=1$, when $n \geq 13$, the inequality holds. Therefore, we can say that $f(n) \in O(g(n))$. 
+    
+As for whether $f(n) \in \Omega (g(n))$, we can find the limit of $\frac{f(n)}{g(n)}$ when $n \rightarrow \infty $ to justify it.
+
+\[
+\begin{split}
+\lim_{n \rightarrow \infty} \frac{f(n)}{g(n)} & = \lim_{n \rightarrow \infty} \frac{n^22^n}{3^n} \\
+& = \lim_{n \rightarrow \infty} \frac{n^2}{(\frac{3}{2})^n} \\
+& = \lim_{n \rightarrow \infty} \frac{2n}{\ln \frac{3}{2} (\frac{3}{2})^n} \\
+& = \lim_{n \rightarrow \infty} \frac{2}{(\ln \frac{3}{2})^2 (\frac{3}{2})^n} \\
+& = 0
+\end{split}
+\]
+Hence, we can obviously say that $g(n)$ is larger than $f(n)$ (as an inaccurate statement), so $f(n) \notin \Omega (g(n))$.
+    }
+\end{enumerate}
+
+%problem 3
+\item{
+Since $f(n) \in O(g(n))$, there exists $c,n_0>0 \ s.t. \ f(n) \leq cg(n) \ \forall n>n_0$. Taking the $\log$ at both sides, we have
+\[
+\log f(n) \leq \log c + \log g(n), \ \forall n>n_0
+\]
+If the statement is true, then we can find a coefficient $c'$ such that
+\[
+\log f(n) \leq \log c + \log g(n) \leq c' \log g(n), \ \forall n>n_0
+\]
+If $c' \geq \frac{\log c + \log g(n)}{\log g(n)}$, then the inequality holds. Fortunately there exists $c'$, when $c' \geq \frac{\log c + \log g(n_0)}{\log g(n_0)}$, to hold this inequality. Therefore, we can say that it is true that $\log f(n) \in O(\log g(n))$.
+
+As for whether it is true for $2^{f(n)} \in O(2^{g(n)})$, we can proof by contradiction easily. Let $f(n) = 2\log n$ and $g(n) = log(n)$, we have $2^{f(n)}=n^2$ and $2^{g(n)} = n$, which is obviously false for $2^{f(n)} \in O(2^{g(n)})$.
+
+At the end, if $f(n)$ is a constant, the assumption for $f(n)$ is a strictly increasing function is false, which implies this proposition is false, as a result, we cannot justify the property. So deflated QQ.
+}
+
+%problem 4
+\item {
+By the recurrence relation, we have
+\[
+\begin{split}
+    T(n-1) & = (n-1) + [T(n-2) + T(n-3) + \cdots + T(2) + T(1)] \\
+    T(n) & = n + [T(n-1) + T(n-2) + \cdots + T(2) + T(1)]
+\end{split}
+\]
+Decrease these two equation, we have:
+\[
+T(n)-T(n-1)=n-(n-1)+T(n-1)
+\]
+which is equal to
+\[
+T(n) = 2T(n-1)+1
+\]
+Use the recurrence relation again, we can substitute $T(n-1)$ by $2T(n-2)+1$ and so on. Therefore we have a new relation:
+\[
+\begin{split}
+    T(n) & = 2T(n-1)+1 \\
+    & = 2^iT(n-1) + (2^{i-1} + 2^{i-2} + \cdots + 2^2 + 2 + 1)
+\end{split}
+\]
+Since $T(1) = 1$, by substituting $i$ with $n-1$, we have:
+\[
+\begin{split}
+    T(n) & = 2^{n-1}T(1) + (2^{n-2} + 2^{n-3} + \cdots + 2^2 + 2 + 1) \\
+    & = 2^{n-1} + \frac{1\cdot (2^{n-1})}{2-1} \\
+    & = 2^n
+\end{split}
+\]
+
+}
+
+%problem 5
+\item{
+The attempt fails since we cannot eliminate the constant in the original recurrence relation, but if we modify the guess inequality from $T(n)\leq cn$ into $T(n) \leq cn - 1$, it can deal with the problem. In accuracy, we will have
+\[
+\begin{split}
+    T(n) & = 2T(\frac{n}{2}) + 1 \\
+    & \leq 2(\frac{cn}{2} - 1) + 1 \\
+    & = cn - 1 \\
+    & \leq cn
+\end{split}
+\]
+By proving $T(n) \leq cn$, we have $T(n) \in O(n)$.
+}
+
+
+\end{enumerate}
+
+\end{document}
