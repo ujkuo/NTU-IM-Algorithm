@@ -67,7 +67,7 @@ Let $f(n)=\log_2n$, $x = a$, $y = 2^b$, $a,b > 0$, by using the above theorem, w
 \[
 (\log_2n)^a = o(2^{b(\log_{2}n)}) = o(n^b)
 \]
-Thus, we proof the function by using the above theorem.
+Thus, we prove the function by using the above theorem.
 }
 
 %problem 2
@@ -86,7 +86,7 @@ Thus, we proof the function by using the above theorem.
 \end{split}
 \]
 Hence, we can obviously say that $f(n)$ is larger than $g(n)$ (as an inaccurate statement), so $f(n) \notin O(g(n))$. \\
-To justify whether $f(n) \in \Omega (g(n))$, we can proof by big-omega's definition:
+To justify whether $f(n) \in \Omega (g(n))$, we can prove by $\Omega$'s definition:
 \[
 \Omega (g(n)) = \{ f(n) \ | \ \exists \ c, \ n_0 > 0 \ s.t. \ cg(n) \leq f(n), \ \forall n \geq n_0 \} 
 \]
@@ -98,7 +98,7 @@ Substitute $\log n$ by x and than take the $\log _2$ at both sides, we have:
 \[
 x + \log c - \log x \leq x \log x
 \]
-When $c=1$, $x > 1$ $i.e. \ n > 2$ , the inequality holds. Thus, by definition, we proof that $f(n) \in \Omega (g(n))$.
+When $c=1$, $x > 1$ $i.e. \ n > 2$ , the inequality holds. Thus, by definition, we prove that $f(n) \in \Omega (g(n))$.
     }
     
     \item{ %problem b
@@ -139,7 +139,7 @@ If the statement is true, then we can find a coefficient $c'$ such that
 \]
 If $c' \geq \frac{\log c + \log g(n)}{\log g(n)}$, then the inequality holds. Fortunately there exists $c'$, when $c' \geq \frac{\log c + \log g(n_0)}{\log g(n_0)}$, to hold this inequality. Therefore, we can say that it is true that $\log f(n) \in O(\log g(n))$.
 
-As for whether it is true for $2^{f(n)} \in O(2^{g(n)})$, we can proof by contradiction easily. Let $f(n) = 2\log n$ and $g(n) = log(n)$, we have $2^{f(n)}=n^2$ and $2^{g(n)} = n$, which is obviously false for $2^{f(n)} \in O(2^{g(n)})$.
+As for whether it is true for $2^{f(n)} \in O(2^{g(n)})$, we can prove by contradiction easily. Let $f(n) = 2\log n$ and $g(n) = log(n)$, we have $2^{f(n)}=n^2$ and $2^{g(n)} = n$, which is obviously false for $2^{f(n)} \in O(2^{g(n)})$.
 
 At the end, if $f(n)$ is a constant, the assumption for $f(n)$ is a strictly increasing function is false, which implies this proposition is false, as a result, we cannot justify the property. So deflated QQ.
 }
@@ -153,7 +153,7 @@ By the recurrence relation, we have
     T(n) & = n + [T(n-1) + T(n-2) + \cdots + T(2) + T(1)]
 \end{split}
 \]
-Decrease these two equation, we have:
+Decrease these two equations, we have:
 \[
 T(n)-T(n-1)=n-(n-1)+T(n-1)
 \]
@@ -161,7 +161,7 @@ which is equal to
 \[
 T(n) = 2T(n-1)+1
 \]
-Use the recurrence relation again, we can substitute $T(n-1)$ by $2T(n-2)+1$ and so on. Therefore we have a new relation:
+Use the recurrence relation again, we can substitute $T(n-1)$ by $2T(n-2)+1$ and so on. Therefore we have a new recurrence:
 \[
 \begin{split}
     T(n) & = 2T(n-1)+1 \\
