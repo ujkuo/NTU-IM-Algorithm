@@ -1,12 +1,3 @@
-/*
- * UVa1282.cpp
- * Copyleft (ɔ) 2020 wildfootw <wildfootw@wildfoo.tw>
- *
- * Distributed under terms of the MIT license.
- */
-
-// [ ] Completed
-
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -62,7 +53,7 @@ void KnuthMorrisPratt::calculate_failure(bool allow_overlap)
 
     for(int i = 1, j = 0;i < combine_str.length();++i)
     {
-        if(failure[i - 1] == pattern.length()) // failure[i - 1] == pattern.length() is my own alternative for in case failure > pattern length (z.B. ABZABC ABZABCABZABC)
+        if(failure[i - 1] == pattern.length()) // failure[i - 1] == pattern.length() is my own alternative for in case failure > pattern length (e.g. ABe.g. ABe.g.ABe.g.)
         {
             if(allow_overlap)
                 j = failure[j - 1];
@@ -87,7 +78,7 @@ void KnuthMorrisPratt::calculate_failure(bool allow_overlap)
 
 void KnuthMorrisPratt::matching()
 {
-    for(int i = pattern.size() - 1;i < text.length();++i) // i = pattern.size() is avoid ... (z.B. text: 0110, pattern: 101, result should be 0 but 1)
+    for(int i = pattern.size() - 1;i < text.length();++i) // i = pattern.size() is avoid ... (e.g. text: 0110, pattern: 101, result should be 0 but 1)
     {
         if(failure[pattern.length() + i] == pattern.length())
         {
@@ -234,7 +225,7 @@ private:
     unsigned long long int count_occurrence_times_recursive(int n)
     {
         if(occurrence_times[n] != -1)
-            return occurrence_times[n];
+            return occurrence_times[n]; // have been counted
         if(fibonacci_word_sequence_length[n] < occurrence_pattern.length())
             return occurrence_times[n] = 0;
 
@@ -284,7 +275,7 @@ int main(int argc, char* argv[])
         delete input;
     }
 
-    clog << "Time used = " << (double)clock() / CLOCKS_PER_SEC << endl;
+    // clog << "Time used = " << (double)clock() / CLOCKS_PER_SEC << endl;
     return 0;
 }
 
